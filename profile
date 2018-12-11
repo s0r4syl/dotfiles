@@ -13,37 +13,25 @@ if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
 	. "$HOME/.bashrc"
+        set bell-style none
     fi
 fi
 
-# Environment Variable
-export LANG='en_US.UTF-8'
-export LC_ALL='en_US.UTF-8'
-export HISTCONTROL=ignoredups
-#export HISTIGNORE="history*:ls*:ll"
-export HISTSIZE=10000
-export PATH=/opt/firefox:$PATH
-
-## ctf
-export PATH=~/ctf/tools/bin:$PATH
-
-## android
-export PATH=/opt/android-studio/bin:$PATH
-AndroidSdk=~/Android/Sdk
-export PATH=$AndroidSdk/emulator:$AndroidSdk/platform-tools:$PATH
-
-## python
-export PYENV_ROOT=$HOME/.pyenv
-export PATH=$PYENV_ROOT/bin:$PATH
-#eval "$(pyenv init -)"
-#eval "$(pyenv virtualenv-init -)"
-
-## OP_TEE
-export PATH="$HOME/devel/optee-rsp3/toolchains/aarch64/bin":$PATH
-
-
-
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
+if [ -f "$HOME/bin" ] ; then
     export PATH="$HOME/bin:$PATH"
+fi
+
+
+# ssh-agent
+agent="$HOME/tmp/ssh-agent-$USER"
+if [ -S "$SSH_AUTH_SOCK" ]; then
+	case $SSH_AUTH_SOCK in
+	/tmp/*/agent.[0-9]*)
+		ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+	esac
+elif [ -S $agent ]; then
+	export SSH_AUTH_SOCK=$agent
+else
+	echo "no ssh-agent"
 fi
