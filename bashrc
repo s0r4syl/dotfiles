@@ -18,25 +18,10 @@ alias lld='ls -al | grep ^d'
 alias llf='ls -al | grep -v ^d'
 # manページは日本語で
 alias man='env LANG=ja_JP.UTF-8 LANGUAGE=ja_JP LC_ALL=ja_JP.UTF-8 man'
-alias chrome='google-chrome'
-alias os_version='lsb_release -a'
-alias open='xdg-open'
 alias global_ip='curl inet-ip.info'
-alias acrobat_reader_dx='WINEPREFIX=~/.wine-AcrobatReaderDC /opt/wine-staging/bin/wine C:\\Program\ Files\\Adobe\\Acrobat\ Reader\ DC\\Reader\\AcroRd3'
 ## Editor: emacs
 alias emacs='emacsclient -c -a ""'
 alias killemacs='emacsclient -e "(kill-emacs)"'
-
-alias pbcopy='xsel --clipboard --input'
-alias pbpaste='xsel --clipboard --output'
-
-# Directory移動
-alias home='cd ~/'
-alias emacsdir='cd ~/.emacs.d'
-
-# 省略
-alias upgrade='sudo apt update && sudo apt upgrade'
-alias bashconf='source ~/.bashrc'
 
 ##
 export LANG='en_US.UTF-8'
@@ -48,28 +33,22 @@ export LC_ALL='en_US.UTF-8'
 export HISTCONTROL=ignoredups
 export HISTIGNORE="history*:ll"
 export HISTSIZE=10000
-export PATH=$HOME/bin:$PATH
-export PATH=~/ctf/bin:$PATH                 # for CTF
-export MANPATH=$MANPATH:/usr/share/man/ja/
-### /opt
-export PATH=/opt/firefox:$PATH
-export PATH=/opt/wkhtmltox/bin:$PATH
-export PATH=/opt/wine-staging/bin:$PATH
+if [[ -e $HOME/bin ]]; then
+    export PATH=$HOME/bin:$PATH
+fi
 ## texlive 2018
-export INFOPATH=/usr/local/texlive/2018/texmf-dist/doc/info:$INFOPATH
-export MANPATH=/usr/local/texlive/2018/texmf-dist/doc/man:$MANPATH
-export PATH=/usr/local/texlive/2018/bin/x86_64-linux:$PATH
+#export INFOPATH=/usr/local/texlive/2018/texmf-dist/doc/info:$INFOPATH
+#export MANPATH=/usr/local/texlive/2018/texmf-dist/doc/man:$MANPATH
+#export PATH=/usr/local/texlive/2018/bin/x86_64-linux:$PATH
 
 ## android development
-droidSdk=~/Android/Sdk
-export PATH=$droidSdk/emulator:$droidSdk/tools:$droidSdk/platform-tools:$PATH  # for AOSP
-export PATH=/opt/android-studio/bin:$PATH
-export PATH=$droidSdk/ndk-bundle:$PATH
-export USE_CCACHE=1
-export CCACHE_DIR=~/aosp/.ccache
+#droidSdk=~/Android/Sdk
+#export PATH=$droidSdk/emulator:$droidSdk/tools:$droidSdk/platform-tools:$PATH  # for AOSP
+#export PATH=/opt/android-studio/bin:$PATH
+#export PATH=$droidSdk/ndk-bundle:$PATH
+#export USE_CCACHE=1
+#export CCACHE_DIR=~/aosp/.ccache
 
-## toolchains
-export PATH=$PATH:/home/kazuya/bin/gcc-linaro-5.5.0-2017.10-x86_64_aarch64-linux-gnu/bin
 
 ## python
 # バイトコードを作成しない
@@ -81,11 +60,9 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 PS1='\[\e[1;32m\]\u@\h:\[\e[1;36m\]\w \[\e[m\]$ '
-## OP-TEE
-#export PATH="$HOME/devel/optee-qemuv8/toolchains/bin":$PATH
 
 # Opencv3
-export LD_LIBRARY_PATH=/usr/local/lib
+#export LD_LIBRARY_PATH=/usr/local/lib
 
 # CGIでゴミ箱を使う
 function trashbox(){
@@ -121,11 +98,3 @@ h() {
         history 50
     fi
 }
-
-
-## CUDA and cuDNN paths
-#export PATH=/usr/local/cuda-9.2/bin:${PATH}
-#export LD_LIBRARY_PATH=/usr/local/cuda-9.2/lib64:${LD_LIBRARY_PATH}
-#export DYLD_LIBRARY_PATH=/usr/loca/cuda-9.2/lib64:${DYLD_LIBRARY_PATH}
-
-#eval "$(ntfy shell-integration)"
